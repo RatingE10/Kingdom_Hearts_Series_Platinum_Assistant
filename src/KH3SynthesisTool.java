@@ -110,19 +110,19 @@ public class KH3SynthesisTool {
         }
         JOptionPane.showMessageDialog(null, "We would suggest putting this program in a folder of its own, so we can make the text files needed. If you haven't done so, close the program and do so now.", "KH3 Synthesis Tool", JOptionPane.PLAIN_MESSAGE);
         try {
-            materialList = new File("Materials.txt");
+            materialList = new File("KH3SynthesisToolFiles\\KH3Materials.txt");
             reader = new BufferedReader(new FileReader(materialList));
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(null, "Oops, we couldn't find the material list for you. Give us one second while we make that for you.", "KH3 Synthesis Tool", JOptionPane.PLAIN_MESSAGE);
 
             try {
-                File myObj = new File("Materials.txt");
+                File myObj = new File("KH3SynthesisToolFiles\\KH3Materials.txt");
                 if (myObj.createNewFile()) {
                     JOptionPane.showMessageDialog(null, "File created: " + myObj.getName(), "KH3 Synthesis Tool", JOptionPane.PLAIN_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(null, "File already exists.", "KH3 Synthesis Tool", JOptionPane.PLAIN_MESSAGE);
                 }
-                materialList = new File("Materials.txt");
+                materialList = new File("KH3SynthesisToolFiles\\KH3Materials.txt");
                 reader = new BufferedReader(new FileReader(materialList));
             } catch (IOException f) {
                 JOptionPane.showMessageDialog(null, "An error occurred.", "KH3 Synthesis Tool", JOptionPane.PLAIN_MESSAGE);
@@ -131,19 +131,19 @@ public class KH3SynthesisTool {
 
         }
         try {
-            synthesisRecipes = new File("Recipes.txt");
+            synthesisRecipes = new File("KH3SynthesisToolFiles\\KH3Recipes.txt");
             reader = new BufferedReader(new FileReader(synthesisRecipes));
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(null, "Oops, we couldn't find the synthesis recipes. Give us one second while we make that for you.", "KH3 Synthesis Tool", JOptionPane.PLAIN_MESSAGE);
 
             try {
-                File myObj = new File("Recipes.txt");
+                File myObj = new File("KH3SynthesisToolFiles\\KH3Recipes.txt");
                 if (myObj.createNewFile()) {
                     JOptionPane.showMessageDialog(null, "File created: " + myObj.getName(), "KH3 Synthesis Tool", JOptionPane.PLAIN_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(null, "File already exists.", "KH3 Synthesis Tool", JOptionPane.PLAIN_MESSAGE);
                 }
-                synthesisRecipes = new File("Recipes.txt");
+                synthesisRecipes = new File("KH3SynthesisToolFiles\\KH3Recipes.txt");
                 reader = new BufferedReader(new FileReader(synthesisRecipes));
             } catch (IOException f) {
                 JOptionPane.showMessageDialog(null, "An error occurred.", "KH3 Synthesis Tool", JOptionPane.PLAIN_MESSAGE);
@@ -152,19 +152,19 @@ public class KH3SynthesisTool {
 
         }
         try {
-            userSynth = new File("User Synthesis.txt");
+            userSynth = new File("KH3SynthesisToolFiles\\KH3SynthesizedItems.txt");
             reader = new BufferedReader(new FileReader(userSynth));
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(null, "Oops, we couldn't find your synthesized items. Give us one second while we set that up for you.", "KH3 Synthesis Tool", JOptionPane.PLAIN_MESSAGE);
 
             try {
-                File myObj = new File("User Synthesis.txt");
+                File myObj = new File("KH3SynthesisToolFiles\\KH3SynthesizedItems.txt");
                 if (myObj.createNewFile()) {
                     JOptionPane.showMessageDialog(null, "File created: " + myObj.getName(), "KH3 Synthesis Tool", JOptionPane.PLAIN_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(null, "File already exists.", "KH3 Synthesis Tool", JOptionPane.PLAIN_MESSAGE);
                 }
-                userSynth = new File("User Synthesis.txt");
+                userSynth = new File("KH3SynthesisToolFiles\\KH3SynthesizedItems.txt");
                 reader = new BufferedReader(new FileReader(userSynth));
             } catch (IOException f) {
                 JOptionPane.showMessageDialog(null, "An error occurred.", "KH3 Synthesis Tool", JOptionPane.PLAIN_MESSAGE);
@@ -1107,21 +1107,209 @@ public class KH3SynthesisTool {
     public static void materialLocations(File materialList) {
         boolean continueSearching = true;
         while (continueSearching) {
-            String lookingForMaterial = JOptionPane.showInputDialog(null, "Hi-ho, Kermit the Frog here.", "KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
+            String lookingForMaterial = JOptionPane.showInputDialog(null, "Please input the material you are looking for.", "KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
             if(lookingForMaterial == null)
                 return;
             while (findInFile(materialList, lookingForMaterial).equalsIgnoreCase("Not Found")) {
                 lookingForMaterial = JOptionPane.showInputDialog(null, "Please input a vaild Synthesis Material with proper capitalization and spacing.", "KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
             }
             continueSearching = switch (lookingForMaterial) {
+                case "Blazing Shard" -> {
+                    JOptionPane.showMessageDialog(null, """
+                            Your best bet is to get these in Battlegate 1 in Olympus. This Battlegate can be found smack-dab in the middle of the Courtyard. However, this
+                            should be one of the materials you don't worry about, seeing how plentiful the enemies that drop them are.
+                            
+                            TIP: They drop most frequently (at 12%) from Flame Cores, which you can find in Olympus and Monstropolis.
+                            ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
+                    yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
+                }
+                case "Blazing Stone", "Blazing Gem" -> {
+                    JOptionPane.showMessageDialog(null, """
+                            While you can find these in Battlegate 13 from Vermillion Sambas, your best chance of getting these is to go to either Monstropolis or Olympus and
+                            take the Flowmotion rails in either the Corridors or the Door Vault.
+                            
+                            TIP: This is also a good way to get Soothing Stones and Gems from Marine Rumbas and Lightning Stones and Gems from Gold Beats.
+                            ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
+                    yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
+                }
+                case "Blazing Crystal" -> {
+                    JOptionPane.showMessageDialog(null, """
+                            While High Soldiers are the only way to get the item to drop, there is absolutely another, more optimal way to get Blazing Crystals.
+                            Synthesize it. If you don't believe me, Blazing Crystals are a 4% drop. High Soldiers also drop Wellspring Crystals. At 12%.
+                            That are used to synthesize other crystals. Just saying.
+                            
+                            TIP: High Soldiers are found in Battlegate 12 in San Fransokyo.
+                            ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
+                    yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
+
+                }
+                case "Frost Shard" -> {
+                    JOptionPane.showMessageDialog(null, """
+                            You can find every Frost material in Arendelle, shards specifically can be found by killing Winterhorns.
+                            
+                            TIP: These are the only Frost materials that can't be found from killing the Frost Serpents.
+                            ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
+                    yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
+                }
+                case "Frost Stone", "Frost Gem" -> {
+                    JOptionPane.showMessageDialog(null, """
+                            You can find every Frost material in Arendelle, Stones and Gems specifically can be found from breaking Frost Serpent parts.
+                            To find Frost Serpents, go to the Mountain Ridge save-point, and enter the cave by Elsa. From there, go down the cliff until you get
+                            to the big clearing after a drop (passing a set of Helmed Bodies) and you should see 2 Frost Serpents pop up.
+                            
+                            
+                            TIP: Despite what it may seem, you want to take your Lucky Strikes OFF when fighting Frost Serpents, for the chance to get Hungry Gems by hitting the tails.
+                            ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
+                    yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
+                }
+                case "Frost Crystal" -> {
+                    JOptionPane.showMessageDialog(null, """
+                            You can find every Frost material in Arendelle, Crystal specifically are found by killing Frost Serpents. To find Frost Serpents.
+                            go to the Mountain Ridge save-point, and enter the cave by Elsa. From there, go down the cliff until you get to the big clearing
+                            after a drop (passing a set of Helmed Bodies) and you should see 2 Frost Serpents pop up. You can also synthesize these.
+                            
+                            TIP: Take off your Lucky Strikes when fighting the Serpents to have a chance at getting Hungry Gems.
+                            ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
+                    yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
+                }
+                case "Lightning Shard" -> {
+                    JOptionPane.showMessageDialog(null, """
+                            
+                            ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
+                    yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
+                }
+                case "Lightning Stone", "Lightning Gems" -> {
+                        JOptionPane.showMessageDialog(null, """
+                            While you can find these in Battlegate 13 from Gold Beats, your best shot is to ride the Flowmotion rails in Monstropolis'
+                            Door Vault and shoot them down.
+                            
+                            TIP: This is also a good way to find Soothing Stones and Gems from Marine Rumbas and Blaze Stones and Gems from
+                            Vermillion Sambas.
+                            ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
+                    yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
+                }
+                case "Lightning Crystals" -> {
+                    JOptionPane.showMessageDialog(null, """
+                            
+                            ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
+                    yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
+                }
+                case "Lucid Shard" -> {
+                    JOptionPane.showMessageDialog(null, """
+                            
+                            ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
+                    yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
+                }
+                case "Lucid Stone" -> {
+                    JOptionPane.showMessageDialog(null, """
+                            
+                            ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
+                    yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
+                }
+                case "Lucid Crystal" -> {
+                    JOptionPane.showMessageDialog(null, """
+                            
+                            ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
+                    yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
+                }
+                case "Pulsing Shard" -> {
+                    JOptionPane.showMessageDialog(null, """
+                            
+                            ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
+                    yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
+                }
+                case "Pulsing Stone" -> {
+                    JOptionPane.showMessageDialog(null, """
+                            
+                            ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
+                    yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
+                }
+                case "Pulsing Crystal" -> {
+                    JOptionPane.showMessageDialog(null, """
+                            
+                            ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
+                    yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
+                }
+                case "Writhing Shard" -> {
+                    JOptionPane.showMessageDialog(null, """
+                            
+                            ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
+                    yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
+                }
+                case "Writhing Stone" -> {
+                    JOptionPane.showMessageDialog(null, """
+                            
+                            ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
+                    yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
+                }
+                case "Writhing Crystal" -> {
+                    JOptionPane.showMessageDialog(null, """
+                            
+                            ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
+                    yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
+                }
+                case "Betwixt Shard" -> {
+                    JOptionPane.showMessageDialog(null, """
+                            
+                            ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
+                    yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
+                }
+                case "Betwixt Stone" -> {
+                    JOptionPane.showMessageDialog(null, """
+                            
+                            ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
+                    yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
+                }
+                case "Betwixt Crystal" -> {
+                    JOptionPane.showMessageDialog(null, """
+                            
+                            ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
+                    yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
+                }case "Twilight Shard" -> {
+                    JOptionPane.showMessageDialog(null, """
+                            
+                            ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
+                    yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
+                }
+                case "Twilight Stone" -> {
+                    JOptionPane.showMessageDialog(null, """
+                            
+                            ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
+                    yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
+                }
+                case "Twilight Crystal" -> {
+                    JOptionPane.showMessageDialog(null, """
+                            
+                            ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
+                    yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
+                }
                 case "Sinister Shards", "Sinister Stones", "Sinister Gems", "Sinister Crystals" -> {
                     JOptionPane.showMessageDialog(null, """
                             Sinister materials are ONLY found from killing Unversed. If you're done with Monstropolis, you can go from one end of the Power Plant to the other
                             to farm these.
-                                                       
+                                        
                             TIP: If you are still doing the story of Monstropolis, you can abuse the Scare meter sections to farm for however many of these materials you want.
                             """, "KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
                     yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
+                }
+                case "Soothing Shard" -> {
+                    JOptionPane.showMessageDialog(null, """
+                            
+                            ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
+                    yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
+                }
+                case "Soothing Stone", "Soothing Gem" -> {
+                    JOptionPane.showMessageDialog(null, """
+                            
+                            ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
+                    yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
+                }
+                case "Soothing Crystal" -> {
+                    JOptionPane.showMessageDialog(null, """
+                            
+                            ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
+                    yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
+
                 }
                 case "Mythril Shards", "Mythril Stones" -> {
                     JOptionPane.showMessageDialog(null, """
@@ -1152,7 +1340,22 @@ public class KH3SynthesisTool {
                             """, "KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
                     yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
                 }
-                case "Wellspring Crystal" -> {
+                case "Wellspring Shard" -> {
+                    JOptionPane.showMessageDialog(null, """
+                            The fastest way to get these is to go to Isla Verdemontana in the Carribean and grab them from the dozens of Powerwilds you'll find
+                            on the island.
+                            
+                            TIP: A bunch of enemies drop this throughout the game, so while you shouldn't need to farm, the option is there if you want it.
+                            ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
+                    yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
+                }
+                case "Wellspring Stone" -> {
+                    JOptionPane.showMessageDialog(null, """
+                            Best way to find these is to go to Battlegate 7, in the Hills of the Kingdom of Corona. 
+                            ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
+                    yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
+                }
+                case "Wellspring Gem", "Wellspring Crystal" -> {
                     JOptionPane.showMessageDialog(null, """
                             The best way to get Wellspring gems and crystals is to do the San Fransokyo battlegate. Warp to the North
                             District and climb up one of the buildings and start making your way to the building with blue stripes.
@@ -1246,7 +1449,10 @@ public class KH3SynthesisTool {
                             """, "KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
                     yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
                 }
-                default -> true;
+                default -> {
+                    JOptionPane.showMessageDialog(null, "Please input a full material name, with proper capitalization. (If you are looking for Orichalcum+, write it like this.)", "KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE );
+                    yield true;
+                }
             };
         }
     }
