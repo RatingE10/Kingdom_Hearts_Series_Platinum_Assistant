@@ -13,7 +13,7 @@ public class KH3SynthesisTool {
     private static final int[][] materialsNeeded = new int[materialTypes.length + specialMaterials.length][];
     private static int [][] editableMaterialsNeeded = new int[materialTypes.length + specialMaterials.length][];
 
-    public static void main(String[] args) throws Exception {
+     public KH3SynthesisTool() throws Exception{
 
         File materialList = null;
         File synthesisRecipes = null;
@@ -108,7 +108,6 @@ public class KH3SynthesisTool {
             //Orichalcum+
             materialsNeeded[20][0] = 7;
         }
-        JOptionPane.showMessageDialog(null, "We would suggest putting this program in a folder of its own, so we can make the text files needed. If you haven't done so, close the program and do so now.", "KH3 Synthesis Tool", JOptionPane.PLAIN_MESSAGE);
         try {
             materialList = new File("KH3SynthesisToolFiles\\KH3Materials.txt");
             reader = new BufferedReader(new FileReader(materialList));
@@ -1072,17 +1071,15 @@ public class KH3SynthesisTool {
             {
                 if(line.contains('-' + itemToFind) || line.equalsIgnoreCase('-' + itemToFind))
                 {
-                    String recipe = line + '\n';
+                    StringBuilder recipe = new StringBuilder(line + '\n');
                     line = reader.readLine();
                     while(line != null && line.charAt(0) != '-')
                     {
-                        recipe += line + '\n';
+                        recipe.append(line).append('\n');
                         line = reader.readLine();
                     }
-                    return recipe;
+                    return recipe.toString();
                 }
-
-
                 line = reader.readLine();
             }
         } catch (IOException ignored){}
@@ -1113,10 +1110,11 @@ public class KH3SynthesisTool {
             while (findInFile(materialList, lookingForMaterial).equalsIgnoreCase("Not Found")) {
                 lookingForMaterial = JOptionPane.showInputDialog(null, "Please input a vaild Synthesis Material with proper capitalization and spacing.", "KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
             }
+            //TODO: Finish Material Locations
             continueSearching = switch (lookingForMaterial) {
                 case "Blazing Shard" -> {
                     JOptionPane.showMessageDialog(null, """
-                            Your best bet is to get these in Battlegate 1 in Olympus. This Battlegate can be found smack-dab in the middle of the Courtyard. However, this
+                            Your best bet is to get Blazing Shards in Battlegate 1 in Olympus. This Battlegate can be found smack-dab in the middle of the Courtyard. However, this
                             should be one of the materials you don't worry about, seeing how plentiful the enemies that drop them are.
                             
                             TIP: They drop most frequently (at 12%) from Flame Cores, which you can find in Olympus and Monstropolis.
@@ -1125,7 +1123,7 @@ public class KH3SynthesisTool {
                 }
                 case "Blazing Stone", "Blazing Gem" -> {
                     JOptionPane.showMessageDialog(null, """
-                            While you can find these in Battlegate 13 from Vermillion Sambas, your best chance of getting these is to go to either Monstropolis or Olympus and
+                            While you can find Blazing Stones and Gems in Battlegate 13 from Vermillion Sambas, your best chance of getting these is to go to either Monstropolis or Olympus and
                             take the Flowmotion rails in either the Corridors or the Door Vault.
                             
                             TIP: This is also a good way to get Soothing Stones and Gems from Marine Rumbas and Lightning Stones and Gems from Gold Beats.
@@ -1174,14 +1172,19 @@ public class KH3SynthesisTool {
                 }
                 case "Lightning Shard" -> {
                     JOptionPane.showMessageDialog(null, """
+                            You can find Lightning Shards from Soldiers and Bizzare Archers, the latter of which you can find in Battlegate 1
+                            at the Courtyard in Olympus.
                             
+                            TIP: If you're worried about having enough of these, Bizzare Archers are the most common enemy in the fill-in areas
+                            in worlds like Arendelle and Kingdom of Corona. Try to target a few of these as you're running by to get some during
+                            your playthrough.
                             ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
                     yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
                 }
                 case "Lightning Stone", "Lightning Gems" -> {
-                        JOptionPane.showMessageDialog(null, """
-                            While you can find these in Battlegate 13 from Gold Beats, your best shot is to ride the Flowmotion rails in Monstropolis'
-                            Door Vault and shoot them down.
+                    JOptionPane.showMessageDialog(null, """
+                            While you can find Lightning Stones and Gems in Battlegate 13 in the Badlands of the Keyblade Graveyard
+                            from Gold Beats, your best shot is to ride the Flowmotion rails in Monstropolis' Door Vault and shoot them down.
                             
                             TIP: This is also a good way to find Soothing Stones and Gems from Marine Rumbas and Blaze Stones and Gems from
                             Vermillion Sambas.
@@ -1190,25 +1193,32 @@ public class KH3SynthesisTool {
                 }
                 case "Lightning Crystals" -> {
                     JOptionPane.showMessageDialog(null, """
+                            You can go to Battlegate 4 for Lightning Crystals, which drop from Tireblades. Battlegate 4 is
+                            in the vent in the Kid Korral in Toy Box, where the King of Toys boss fight is.
                             
+                            TIP: You can also go to Battlegate 12 in San Fransokyo to farm these, Hungry Crystals, Wellspring Gems, and Wellspring Crystals.
                             ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
                     yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
                 }
-                case "Lucid Shard" -> {
+                case "Lucid Shard", "Lucid Stone" -> {
                     JOptionPane.showMessageDialog(null, """
+                            Lucid Shards and Stone are a really common drop from a lot of really common enemies, but the best way to get them is to go to the
+                            Hills in the Kingdom of Corona to look for Battlegate 7. There are around 45 Puffballs that spawn in the Battlegate, not
+                            including the ones spawned from the Chief Puffs.
                             
+                            TIP: This is also a really good way to farm Wellspring and Hungry Stones.
                             ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
                     yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
                 }
-                case "Lucid Stone" -> {
+                case "Lucid Gems" -> {
                     JOptionPane.showMessageDialog(null, """
-                            
+                            Lucid Gems
                             ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
                     yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
                 }
                 case "Lucid Crystal" -> {
                     JOptionPane.showMessageDialog(null, """
-                            
+                            Lucid
                             ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
                     yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
                 }
@@ -1342,8 +1352,8 @@ public class KH3SynthesisTool {
                 }
                 case "Wellspring Shard" -> {
                     JOptionPane.showMessageDialog(null, """
-                            The fastest way to get these is to go to Isla Verdemontana in the Carribean and grab them from the dozens of Powerwilds you'll find
-                            on the island.
+                            The fastest way to get these is to go to Isla Verdemontana in the Carribean and grab them from the dozens
+                            of Powerwilds you'll find on the island.
                             
                             TIP: A bunch of enemies drop this throughout the game, so while you shouldn't need to farm, the option is there if you want it.
                             ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
@@ -1351,13 +1361,18 @@ public class KH3SynthesisTool {
                 }
                 case "Wellspring Stone" -> {
                     JOptionPane.showMessageDialog(null, """
-                            Best way to find these is to go to Battlegate 7, in the Hills of the Kingdom of Corona. 
+                            Best way to find these is to go to Battlegate 7, in the Hills of the Kingdom of Corona. The Chief Puffs and
+                            Parasol Beauties specifically drop them, so focus them if you can. If you want a more interactive grinding
+                            experience, go to the North District of San Fransokyo and look for the Pogo Shovels in the park.
+                            
+                            TIP: This is another material you shouldn't have to worry about, as there are many enemies throughout
+                            the game that drop these.
                             ""","KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
                     yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
                 }
                 case "Wellspring Gem", "Wellspring Crystal" -> {
                     JOptionPane.showMessageDialog(null, """
-                            The best way to get Wellspring gems and crystals is to do the San Fransokyo battlegate. Warp to the North
+                            The best way to get Wellspring Gems and Crystals is to do the San Fransokyo battlegate. Warp to the North
                             District and climb up one of the buildings and start making your way to the building with blue stripes.
                             You'll pass by it on your way across the rooftops, and if you really can't find it, look it up.
                             Not my fault you can't find it, I'm a text program.
@@ -1366,15 +1381,35 @@ public class KH3SynthesisTool {
                             """, "KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
                     yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
                 }
+                case "Hungry Shard", "Hungry Stone" -> {
+                    JOptionPane.showMessageDialog(null, """
+                           Hungry Shards and Stones drop from Popcats. Your best bet of finding a good amount of these is either
+                           to go to the Labyrinth of Ice (Lower Tier) and go North-East up the wall to find a good amount OR
+                           go to Galaxy Toys: 3rd Floor and go over to where the Verum Rex minigame is to find a larger amount.
+                           
+                           TIP: If you're using the Galaxy Toys method and don't want to have to fly over the store every time,
+                           you can just activate and exit the Verum Rex minigame to refresh spawns.
+                           """, "KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
+                    yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
+                }
                 case "Hungry Gems" -> {
                     JOptionPane.showMessageDialog(null, """
-                            Unfortunately, Hungry Gems can only be found in Arendelle through Frost Serpents. If you warp to the Mountain Ridge and go into the cave
-                            with the ice walls next to the palace, you'll find the Ice Serpents after a drop off (past the first set of Helmed Bodies). Take off your
-                            Lucky Strikes, aim for the tail and use Fire magic for the best chance of getting a Hungry Gem. If you're at the endgame and still don't
-                            have enough... good frickin' luck.
+                            Unfortunately, Hungry Gems can only be found in Arendelle through Frost Serpents. If you warp to the Mountain Ridge
+                            and go into the cave with the ice walls next to the palace, you'll find the Ice Serpents after a drop off
+                            (past the first set of Helmed Bodies). Take off your Lucky Strikes, aim for the tail and use Fire magic for the
+                            best chance of getting a Hungry Gem. If you're at the endgame and still don't have enough... good frickin' luck.
                                                     
                             TIP: The Helmed Bodies also drop Writhing Gems and Pulsing/Wellspring Crystals, so you can multi-task by casting Thunder to kill them on your way too and from.
                             """, "KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
+                    yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
+                }
+                case "Hungry Crystal" -> {
+                    JOptionPane.showMessageDialog(null, """
+                           Turns out, these bad boys drop from Mechanitaurs, which can be found in Battlegate 12 in San Fransokyo. Just drop
+                           at the North District and run up buildings until you find the one with blue stripes. The portal will be at the top.
+                           
+                           TIP: This is also a great way to get Wellspring Gems and Crystals.
+                           """, "KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
                     yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
                 }
                 case "Evanescent Crystal" -> {
@@ -1421,6 +1456,15 @@ public class KH3SynthesisTool {
                                                        
                             TIP: You can find it in chests, Treasure Spheres in The Eclipse, or the blue rocks. Like the other ones.
                             """, "KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
+                    yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
+                }
+                case "Electrum" -> {
+                    JOptionPane.showMessageDialog(null, """
+                           Ok. These are pretty rare, there's only 7 guaranteed in the whole game. 7 in chests, 2 in a
+                           Treasure Sphere in The Eclipse.
+                           
+                           TIP: You can find these in The Eclipse blue rocks. At 1%. Make do. Please.
+                           """, "KH3 Synthesis Tool: Material Locations", JOptionPane.PLAIN_MESSAGE);
                     yield JOptionPane.showConfirmDialog(null, "Would you like to keep searching?", "KH3 Synthesis Tool: Material Locations", JOptionPane.YES_NO_OPTION) == 0;
                 }
                 case "Orichalcum" -> {
@@ -1623,7 +1667,6 @@ public class KH3SynthesisTool {
         }
         frame.dispose();
     }
-
 }
 
 
